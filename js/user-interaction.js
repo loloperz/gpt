@@ -13,6 +13,7 @@ class Userinteraction extends HTMLElement {
       this.shadow.innerHTML =
         /*html*/`
           <style>
+            
         .message-input{
             
         }

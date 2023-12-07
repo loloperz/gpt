@@ -1,2 +1,7 @@
 import "./user-interaction.js"
 import "./new-chat.js"
+import "./history.js"
+import "./user-login.js"
+import "./conversation.js"
+import "./examples.js"
+import "./aside.js"
