@@ -59,6 +59,7 @@ class Conversation extends HTMLElement {
         img{
           width:25px;
           height:25px;
+          border-radius:  5px;
         }
         .conversation{
           align-items: center;
@@ -70,10 +71,13 @@ class Conversation extends HTMLElement {
         }
 
         .conversation.active{
-          align-items: flex-start;
-          justify-content: flex-start;
+          justify-content: flex-end;
           min-height: 87vh;
+         
+          
+          
         }
+       
         .welcome{
           align-items: center;
           display: flex;
@@ -106,17 +110,10 @@ class Conversation extends HTMLElement {
           margin: 0;
             
         }
-        .faq {
-          border: 1px solid #dddddd;
-          border-radius: 5px;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          padding: 0.5rem;
-        }
-
+    
         h2 {
           margin: 0;
+          color: hsl(0, 0%, 100%)
         }
 
         p {
@@ -125,12 +122,10 @@ class Conversation extends HTMLElement {
         }
         .prompt{
           display:flex;
-          gap:0.3rem;
-          position:absolute;
-       
+
+          width: 100%;
         }
-        
-        
+      
           </style>
 
           <section class="conversation">
