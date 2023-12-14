@@ -1,25 +1,33 @@
 class Examples extends HTMLElement {
 
     constructor() {
-      super()
-      this.shadow = this.attachShadow({ mode: 'open' })
+        super()
+        this.shadow = this.attachShadow({ mode: 'open' })
+
+        document.addEventListener("start-chat", this.handleStartChat.bind(this));
+        document.addEventListener("new-chat", this.handleNewChat.bind(this));
     }
   
     connectedCallback() {
       this.render()
     }
+    handleStartChat(event){
+        this.shadow.innerHTML="";
+    } 
   
+    handleNewChat(event){
+        this.render();
+    }
     render() {
-      this.shadow.innerHTML =
+      this.shadow.innerHTML = 
         /*html*/`
           <style>
-        
-
             .examples{
                 display: flex;
                 flex-wrap: wrap;
                 gap: 0.5rem;
                 justify-content: center;
+                margin-bottom: 1rem;
             }
 
             .example{
@@ -124,71 +132,65 @@ class Examples extends HTMLElement {
             }
                      
           </style>
+            <section class="examples">
+                <article class="example">
+                    <div class="example-title">
+                    <h2>Comparar principios del diseño</h2>
+                    </div>
+                    <div class="example-description">
+                    <p>para convertir una fecha al día de la semana correspo...</p>
+                    </div>
+                    <div class="example-send">
+                    <div class="example-send-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>  
+                        <span class="tooltiptext">Haz click para enviar</span>         
+                    </div>
+                </article>
+                <article class="example">
+                    <div class="example-title">
+                    <h2>Comparar técnicas de narración</h2>
+                    </div>
+                    <div class="example-description">
+                    <p>en novelas y en películas</p>
+                    </div>
+                    <div class="example-send">
+                    <div class="example-send-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg> 
+                        <span class="tooltiptext">Haz click para enviar</span>                   
+                    </div>
+                </article>
+                <article class="example">
+                    <div class="example-title">
+                    <h2>Generar nombres</h2>
+                    </div>
+                    <div class="example-description">
+                    <p>para mi equipo de fútbol de fantasía con un tema de rasputin</p>
+                    </div>
+                    <div class="example-send">
+                    <div class="example-send-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>  
+                        <span class="tooltiptext">Haz click para enviar</span>                  
+                    </div>
+                </article>
+                <article class="example">
+                    <div class="example-title">
+                    <h2>Sugiere conceptos</h2>
+                    </div>
+                    <div class="example-description">
+                    <p>para un juego de arcade de estilo retro</p>
+                    </div>
+                    <div class="example-send">
+                    <div class="example-send-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>  
+                        <span class="tooltiptext">Haz click para enviar</span>                  
+                    </div>
+                </article>
+            </section>
             
-                    <section class="examples">
-                    <article class="example">
-                        <div class="example-title">
-                        <h2>Comparar principios del diseño</h2>
-                        </div>
-                        <div class="example-description">
-                        <p>para convertir una fecha al día de la semana correspo...</p>
-                        </div>
-                        <div class="example-send">
-                        <div class="example-send-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>  
-                            <span class="tooltiptext">Haz click para enviar</span>         
-                        </div>
-                    </article>
-                    <article class="example">
-                        <div class="example-title">
-                        <h2>Comparar técnicas de narración</h2>
-                        </div>
-                        <div class="example-description">
-                        <p>en novelas y en películas</p>
-                        </div>
-                        <div class="example-send">
-                        <div class="example-send-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg> 
-                            <span class="tooltiptext">Haz click para enviar</span>                   
-                        </div>
-                    </article>
-                    <article class="example">
-                        <div class="example-title">
-                        <h2>Generar nombres</h2>
-                        </div>
-                        <div class="example-description">
-                        <p>para mi equipo de fútbol de fantasía con un tema de rasputin</p>
-                        </div>
-                        <div class="example-send">
-                        <div class="example-send-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>  
-                            <span class="tooltiptext">Haz click para enviar</span>                  
-                        </div>
-                    </article>
-                    <article class="example">
-                        <div class="example-title">
-                        <h2>Sugiere conceptos</h2>
-                        </div>
-                        <div class="example-description">
-                        <p>para un juego de arcade de estilo retro</p>
-                        </div>
-                        <div class="example-send">
-                        <div class="example-send-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" /></svg>  
-                            <span class="tooltiptext">Haz click para enviar</span>                  
-                        </div>
-                    </article>
-                    </section>
-                  
-                   
-         
-        `   
-        
-     
-  
-      
+        `       
     }
-      
-  }
+
+    
+}
   
-  customElements.define('examples-component', Examples);
+customElements.define('examples-component', Examples);
