@@ -22,7 +22,12 @@ class Conversation extends HTMLElement {
     }
 
     handleNewPrompt(event){
-   
+
+      this.newUserMessage(event)
+      this.newModelResponse(event)
+    }
+
+    newUserMessage(event){
       const conversationContainer = this.shadow.querySelector('.conversation')
       const promptContainer = document.createElement('div')
       
@@ -35,7 +40,7 @@ class Conversation extends HTMLElement {
       messageImage.src="https://lh3.googleusercontent.com/a/ACg8ocIOe92N4o3rOpt4OWhQduyQGlosrW1ByDCKWtz5iLA=s96-c"
       
       const messageUser = document.createElement("h2")
-      messageUser.textContent="tu";
+      messageUser.textContent="TU";
       
       const message = document.createElement('p')
       message.textContent = event.detail.prompt
@@ -48,90 +53,147 @@ class Conversation extends HTMLElement {
       promptContainer.appendChild(messageContainer);
 
       conversationContainer.appendChild(promptContainer)
+    }
+
+    newModelResponse(event){
+      const conversationContainer = this.shadow.querySelector('.conversation')
+      const promptContainer = document.createElement('div')
       
-    
+      promptContainer.classList.add('prompt')
+      
+      const messageContainer = document.createElement("div")
+      const imageContainer =document.createElement("div")
+      
+      const messageImage = document.createElement('img')
+      messageImage.src="https://upload.wikimedia.org/wikipedia/commons/1/10/Icono-autob%C3%BAs-rojo.svg"
+      
+      const messageUser = document.createElement("h2")
+      messageUser.textContent="LoloGPT";
+      
+      const message = document.createElement('div')
+      message.classList.add("dot")
+      
+      imageContainer.appendChild(messageImage)
+      messageContainer.appendChild(messageUser)
+      messageContainer.appendChild(message)
+      
+      promptContainer.appendChild(imageContainer);
+      promptContainer.appendChild(messageContainer);
+
+      conversationContainer.appendChild(promptContainer)
     }
 
     render() {
       this.shadow.innerHTML =
         /*html*/`
-          <style>
-        img{
-          width:25px;
-          height:25px;
-        }
-        .conversation{
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          min-height: 75vh;
-          width: 100%;
-        }
+        <style>
 
-        .conversation.active{
-          align-items: flex-start;
-          justify-content: flex-start;
-          min-height: 87vh;
-        }
-        .welcome{
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          width: 100%;
-        }
+          :host{
+            width: 100%;
+          }
 
-        .welcome-logo{
-          align-items: center;
-          background-color: hsl(0, 0%, 100%);
-          border-radius: 50%;
-          display: flex; 
-          height: 4rem;
-          justify-content: center;
-          position: relative;
-          width: 4rem;
-      }
+          img{
+            width:25px;
+            height:25px;
+            border-radius:50%;
+          }
+          .conversation{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 75vh;
+            width: 100%;
+            overflow-y: auto; 
+          }
 
-        .welcome-logo svg{
-          color: hsl(0, 0%, 0%);
-          height: 2.5rem;
-          width: 2.5rem;
-        }
-       
-        .welcome-title h1{
-          color: hsl(0, 0%, 100%);
-          font-family: "SoehneBuch", sans-serif;
-          font-size: 1.3rem;
-          margin: 0;
+          .conversation.active{
+            justify-content: flex-end;
+            min-height: 87vh;
             
-        }
-        .faq {
-          border: 1px solid #dddddd;
-          border-radius: 5px;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          padding: 0.5rem;
-        }
+          }
+          
+             
+            
+         
+          .welcome{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+          }
 
-        h2 {
-          margin: 0;
-        }
+          .welcome-logo{
+            align-items: center;
+            background-color: hsl(0, 0%, 100%);
+            border-radius: 50%;
+            display: flex; 
+            height: 4rem;
+            justify-content: center;
+            position: relative;
+            width: 4rem;
+          }
 
-        p {
-          margin: 0;
-          color: hsl(0, 0%, 100%)
-        }
-        .prompt{
-          display:flex;
-          gap:0.3rem;
-          position:absolute;
-       
-        }
+          .welcome-logo svg{
+            color: hsl(0, 0%, 0%);
+            height: 2.5rem;
+            width: 2.5rem;
+          }
         
+          .welcome-title h1{
+            color: hsl(0, 0%, 100%);
+            font-family: "SoehneBuch", sans-serif;
+            font-size: 1.3rem;
+            margin: 0;
+              
+          }
+          .faq {
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 0.5rem;
+          }
+
+          h2 {
+            margin: 0;
+            font-style:bold;
+            color: hsl(0, 0%, 100%)
+
+          }
+
+          p {
+            margin: 0;
+            color: hsl(0, 0%, 100%)
+          }
+          .prompt{
+            display:flex;
+            gap:0.8rem;
+            width: 90%;
+            margin-bottom:3rem;
+          
         
-          </style>
+          }
+          .dot {
+            width: 10px;
+            height: 10px;
+            background-color: hsl(0, 0%, 100%) ; 
+            border-radius: 50%;
+            animation: pulsar 0.5s infinite alternate;
+          }
+
+          @keyframes pulsar {
+            0% {
+              transform: scale(1); 
+            }
+            100% {
+              transform: scale(1.5); 
+            }
+          }
+        
+        </style>
 
           <section class="conversation">
               <article class="welcome">

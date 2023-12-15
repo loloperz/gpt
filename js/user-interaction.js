@@ -1,16 +1,19 @@
 class Userinteraction extends HTMLElement {
 
-    constructor() {
-      super()
-      this.shadow = this.attachShadow({ mode: 'open' })
-    }
-  
-    connectedCallback() {
-      this.render()
-    }
-  
-    render() {
-      this.shadow.innerHTML =
+  constructor() {
+    super()
+    this.shadow = this.attachShadow({ mode: 'open' })
+  }
+
+  connectedCallback() {
+    this.render()
+    document.addEventListener("new-chat", this.handleNewChat.bind(this));
+  }
+  handleNewChat(event) {
+    this.render()
+  }
+  render() {
+    this.shadow.innerHTML =
         /*html*/`
           <style>
 
@@ -112,26 +115,58 @@ class Userinteraction extends HTMLElement {
                 z-index: 1001;
                 
             }
-            .send-button button{
+            .send-button{
               
-                pointer-events: none; 
+              pointer-events: none; 
             }
-
+            .send-button.disabled{
+              display:none;
+            }
             .send-button .tooltiptext::after {
-                border-width: 5px;
-                border-style: solid;
-                border-color: rgb(0, 0, 0) transparent transparent transparent;
-                content: "";
-                left: 45%;
-                position: absolute;
-                top: 100%;   
+              border-width: 5px;
+              border-style: solid;
+              border-color: rgb(0, 0, 0) transparent transparent transparent;
+              content: "";
+              left: 45%;
+              position: absolute;
+              top: 100%;   
             }
 
             .send-button:hover .tooltiptext{
               opacity: 1;
               visibility: visible;
             }
-        
+            .stop-button.disabled{
+              display:none;
+            }
+            .stop-button{
+              display:block;
+             background-color:transparent;
+            }
+            .stop-button-container {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 24px;
+              width: 24px;
+              background-color: hsl(235, 11%, 23%);
+            }
+
+            .circle {
+              width: 90%;
+              height: 90%;
+              border: 2px solid white;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            .square {
+              width: 45%;
+              height: 45%;
+              background-color: white;
+            }
           </style>
             
             <section class="message-input">
@@ -147,47 +182,71 @@ class Userinteraction extends HTMLElement {
                 <div class="form-element">
                   <textarea placeholder="Message ChatGPT..."></textarea>
                 </div>
-                <div class="send-button">
-                  <button>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-white dark:text-black">
-                      <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>            
-                    <span class="tooltiptext">Enviar mensaje</span>                  
-                  </button>
+                <div class="user-iteraction">
+                  <div class="send-button">
+                    <button class="send">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-white dark:text-black">
+                        <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>            
+                      <span class="tooltiptext">Enviar mensaje</span>                  
+                    </button>
+                  </div>
+                  <div class="stop-button disabled">
+                    <div class="stop-button-container ">
+                      <div class="circle">
+                        <div class="square">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </form>
             </section>
             
-        `   
-        
-      const messageSection = this.shadow.querySelector('.message-input');
-      const sendButton = this.shadow.querySelector(".send-button")
-      const userInput = this.shadow.querySelector(".form-element textarea");
+        `
 
-      messageSection.addEventListener("input", (event) => {
-        if(userInput.value){
-          sendButton.classList.add("active");                   
-        }else{
-          sendButton.classList.remove("active");   
+    const messageSection = this.shadow.querySelector('.message-input');
+    const sendButton = this.shadow.querySelector(".send-button")
+    const userInput = this.shadow.querySelector(".form-element textarea");
+    const stopButton = this.shadow.querySelector(".stop-button")
+
+
+    messageSection.addEventListener("input", (event) => {
+      if (userInput.value) {
+        sendButton.classList.add("active");
+      } else {
+        sendButton.classList.remove("active");
+      }
+    })
+
+    sendButton.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      if (event.target.closest(".send-button")) {
+        sendButton.classList.add("disabled");
+        stopButton.classList.remove("disabled");
+      }
+
+      document.dispatchEvent(new CustomEvent("start-chat"))
+
+      document.dispatchEvent(new CustomEvent("new-prompt", {
+        detail: {
+          prompt: userInput.value
+        }
+      }))
+
+      stopButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (event.target.closest(".stop-button")) {
+          sendButton.classList.remove("disabled");
+          stopButton.classList.add("disabled");
         }
       })
 
-      sendButton.addEventListener("click", (event) =>{
-        
-        event.preventDefault();
-
-        document.dispatchEvent(new CustomEvent("start-chat"))
-        document.dispatchEvent(new CustomEvent("new-prompt", {
-          detail: {
-           prompt: userInput.value
-          }
-        }))
-        
-        this.shadow.querySelector(".form-element textarea").value="";
-      })
-      
-    }
-   
+      userInput.value = ""
+    })
   }
-  
-  customElements.define('user-interaction-component', Userinteraction);
+
+}
+
+customElements.define('user-interaction-component', Userinteraction);

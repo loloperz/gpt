@@ -7,9 +7,10 @@ class NewChat extends HTMLElement {
   
     connectedCallback() {
       this.render()
+      
     }
-  
-    render() {
+
+      render() {
       this.shadow.innerHTML =
         /*html*/`
           <style>
