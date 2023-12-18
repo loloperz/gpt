@@ -86,11 +86,44 @@ class Conversation extends HTMLElement {
     render() {
       this.shadow.innerHTML =
         /*html*/`
+<<<<<<< HEAD
         <style>
 
           :host{
             width: 100%;
           }
+=======
+          <style>
+        img{
+          width:25px;
+          height:25px;
+          border-radius:  5px;
+        }
+        .conversation{
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          min-height: 75vh;
+          width: 100%;
+        }
+
+        .conversation.active{
+          justify-content: flex-end;
+          min-height: 87vh;
+         
+          
+          
+        }
+       
+        .welcome{
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          width: 100%;
+        }
+>>>>>>> a6da31a3bcf237631b77360155edebc98591261d
 
           img{
             width:25px;
@@ -111,6 +144,7 @@ class Conversation extends HTMLElement {
             justify-content: flex-end;
             min-height: 87vh;
             
+<<<<<<< HEAD
           }
           
              
@@ -194,6 +228,26 @@ class Conversation extends HTMLElement {
           }
         
         </style>
+=======
+        }
+    
+        h2 {
+          margin: 0;
+          color: hsl(0, 0%, 100%)
+        }
+
+        p {
+          margin: 0;
+          color: hsl(0, 0%, 100%)
+        }
+        .prompt{
+          display:flex;
+
+          width: 100%;
+        }
+      
+          </style>
+>>>>>>> a6da31a3bcf237631b77360155edebc98591261d
 
           <section class="conversation">
               <article class="welcome">
