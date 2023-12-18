@@ -99,23 +99,8 @@ class Conversation extends HTMLElement {
           height:25px;
           border-radius:  5px;
         }
-        .conversation{
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          min-height: 75vh;
-          width: 100%;
-        }
+        
 
-        .conversation.active{
-          justify-content: flex-end;
-          min-height: 87vh;
-         
-          
-          
-        }
-       
         .welcome{
           align-items: center;
           display: flex;
@@ -137,13 +122,15 @@ class Conversation extends HTMLElement {
             justify-content: center;
             min-height: 75vh;
             width: 100%;
-            overflow-y: auto; 
+            margin-top:1rem;
           }
 
           .conversation.active{
             justify-content: flex-end;
             min-height: 87vh;
+            overflow-y: auto;
           }
+        
           .welcome{
             align-items: center;
             display: flex;

@@ -19,11 +19,10 @@ class Userinteraction extends HTMLElement {
 
             :host{
               width: 100%;
-         
             }
             
             .message-input{
-                
+           
             }
 
             .message-input .attach-button button{
@@ -239,7 +238,9 @@ class Userinteraction extends HTMLElement {
         event.preventDefault();
         if (event.target.closest(".stop-button")) {
           sendButton.classList.remove("disabled");
+          sendButton.classList.remove("active");
           stopButton.classList.add("disabled");
+          userInput.value = ""
         }
       })
 
