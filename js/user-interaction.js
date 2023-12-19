@@ -3,15 +3,37 @@ class Userinteraction extends HTMLElement {
   constructor() {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
-  }
 
-  connectedCallback() {
-    this.render()
     document.addEventListener("new-chat", this.handleNewChat.bind(this));
   }
+  static get observedAttributes () {
+    return ['state']
+  }
+  
+  connectedCallback() {
+    this.render()
+  }
+  
+  attributeChangedCallback (name, oldValue, newValue) {
+
+    if (name === 'state') {
+      if(newValue == 'stop') {
+        this.shadow.querySelector(".send-button").classList.add("disabled");
+        this.shadow.querySelector(".stop-button").classList.remove("disabled");
+      }
+
+      if(newValue == 'run') {
+        this.shadow.querySelector(".stop-button").classList.add("disabled");
+        this.shadow.querySelector(".send-button").classList.remove("disabled");
+        this.shadow.querySelector(".send-button").classList.remove("active");
+      }
+    }
+  }
+
   handleNewChat(event) {
     this.render()
   }
+
   render() {
     this.shadow.innerHTML =
         /*html*/`
@@ -219,12 +241,10 @@ class Userinteraction extends HTMLElement {
     })
 
     sendButton.addEventListener("click", (event) => {
+
       event.preventDefault();
 
-      if (event.target.closest(".send-button")) {
-        sendButton.classList.add("disabled");
-        stopButton.classList.remove("disabled");
-      }
+      this.setAttribute("state","stop");
 
       document.dispatchEvent(new CustomEvent("start-chat"))
 
@@ -234,17 +254,19 @@ class Userinteraction extends HTMLElement {
         }
       }))
 
-      stopButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (event.target.closest(".stop-button")) {
-          sendButton.classList.remove("disabled");
-          sendButton.classList.remove("active");
-          stopButton.classList.add("disabled");
-          userInput.value = ""
-        }
-      })
 
       userInput.value = ""
+    })
+
+    stopButton.addEventListener("click", (event) => {
+
+      event.preventDefault();
+      
+      if (event.target.closest(".stop-button")) {
+        
+        this.setAttribute("state","run");
+        userInput.value = ""
+      }
     })
   }
 

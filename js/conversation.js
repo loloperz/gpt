@@ -3,6 +3,7 @@ class Conversation extends HTMLElement {
     constructor() {
       super()
       this.shadow = this.attachShadow({ mode: 'open' })
+      this.newChat = true;
       document.addEventListener("start-chat", this.handleStartChat.bind(this));
       document.addEventListener("new-chat", this.handleNewChat.bind(this));
       document.addEventListener("new-prompt", this.handleNewPrompt.bind(this));
@@ -14,7 +15,9 @@ class Conversation extends HTMLElement {
 
     handleStartChat(event){
       this.shadow.querySelector(".conversation").classList.add("active");
-      this.shadow.querySelector(".welcome").remove();
+
+      this.shadow.querySelector(".welcome")?.remove();
+
     } 
 
     handleNewChat(event){
@@ -93,28 +96,27 @@ class Conversation extends HTMLElement {
             width: 100%;
           }
 
-          <style>
-        img{
-          width:25px;
-          height:25px;
-          border-radius:  5px;
-        }
-        
+          img{
+            width:25px;
+            height:25px;
+            border-radius:  5px;
+          }
+          
 
-        .welcome{
-          align-items: center;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          width: 100%;
-        }
-
+          .welcome{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+          }
 
           img{
             width:25px;
             height:25px;
             border-radius:50%;
           }
+
           .conversation{
             align-items: center;
             display: flex;
@@ -123,13 +125,29 @@ class Conversation extends HTMLElement {
             min-height: 75vh;
             width: 100%;
             margin-top:1rem;
+           
           }
 
           .conversation.active{
-            justify-content: flex-end;
             min-height: 87vh;
+            max-height: 87vh;
             overflow-y: auto;
           }
+          
+
+          .conversation.active::-webkit-scrollbar {
+            width: 0.5rem; 
+            background-color: transparent;
+          }
+          
+
+
+          .conversation.active::-webkit-scrollbar-thumb {
+            border-radius: 1rem;
+            background-color: transparent;
+          }
+
+
         
           .welcome{
             align-items: center;
